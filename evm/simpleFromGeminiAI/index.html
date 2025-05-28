@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Chain Gas Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Multi-Chain Gas Dashboard</h1>
+
+    <div class="chain-section">
+        <h2 class="chain-title">Ethereum Mainnet</h2>
+        <div class="gas-data-item">Base Fee: <span id="ethereum-mainnet-base-fee-wei" class="loading">Loading...</span> wei | <span id="ethereum-mainnet-base-fee-gwei" class="loading">Loading...</span> Gwei | <span id="ethereum-mainnet-base-fee-native" class="loading">Loading...</span> ETH</div>
+        <div class="gas-data-item">Estimated Fast Gas: <span id="ethereum-mainnet-gas-fast-wei" class="loading">Loading...</span> wei | <span id="ethereum-mainnet-gas-fast-gwei" class="loading">Loading...</span> Gwei | <span id="ethereum-mainnet-gas-fast-native" class="loading">Loading...</span> ETH</div>
+    </div>
+
+    <div class="chain-section">
+        <h2 class="chain-title">Polygon Mainnet</h2>
+        <div class="gas-data-item">Base Fee: <span id="polygon-mainnet-base-fee-wei" class="loading">Loading...</span> wei | <span id="polygon-mainnet-base-fee-gwei" class="loading">Loading...</span> Gwei | <span id="polygon-mainnet-base-fee-native" class="loading">Loading...</span> POL</div>
+        <div class="gas-data-item">Estimated Fast Gas: <span id="polygon-mainnet-gas-fast-wei" class="loading">Loading...</span> wei | <span id="polygon-mainnet-gas-fast-gwei" class="loading">Loading...</span> Gwei | <span id="polygon-mainnet-gas-fast-native" class="loading">Loading...</span> POL</div>
+    </div>
+
+    <div class="chain-section">
+        <h2 class="chain-title">Arbitrum One</h2>
+        <div class="gas-data-item">Base Fee: <span id="arbitrum-one-base-fee-wei" class="loading">Loading...</span> wei | <span id="arbitrum-one-base-fee-gwei" class="loading">Loading...</span> Gwei | <span id="arbitrum-one-base-fee-native" class="loading">Loading...</span> ETH</div>
+        <div class="gas-data-item">Estimated Fast Gas: <span id="arbitrum-one-gas-fast-gwei" class="loading">Loading...</span> wei | <span id="arbitrum-one-gas-fast-gwei" class="loading">Loading...</span> Gwei | <span id="arbitrum-one-gas-fast-native" class="loading">Loading...</span> ETH</div>
+    </div>
+
+    <div class="chain-section">
+        <h2 class="chain-title">Optimism</h2>
+        <div class="gas-data-item">Base Fee: <span id="optimism-base-fee-wei" class="loading">Loading...</span> wei | <span id="optimism-base-fee-gwei" class="loading">Loading...</span> Gwei | <span id="optimism-base-fee-native" class="loading">Loading...</span> ETH</div>
+        <div class="gas-data-item">Estimated Fast Gas: <span id="optimism-gas-fast-wei" class="loading">Loading...</span> wei | <span id="optimism-gas-fast-gwei" class="loading">Loading...</span> Gwei | <span id="optimism-gas-fast-native" class="loading">Loading...</span> ETH</div>
+    </div>
+
+    <div class="chain-section">
+        <h2 class="chain-title">Binance Smart Chain</h2>
+        <div class="gas-data-item">Base Fee: <span id="binance-smart-chain-base-fee-wei" class="loading">Loading...</span> wei | <span id="binance-smart-chain-base-fee-gwei" class="loading">Loading...</span> Gwei | <span id="binance-smart-chain-base-fee-native" class="loading">Loading...</span> BSC</div>
+        <div class="gas-data-item">Estimated Fast Gas: <span id="binance-smart-chain-gas-fast-wei" class="loading">Loading...</span> wei | <span id="binance-smart-chain-gas-fast-gwei" class="loading">Loading...</span> Gwei | <span id="binance-smart-chain-gas-fast-native" class="loading">Loading...</span> BSC</div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
