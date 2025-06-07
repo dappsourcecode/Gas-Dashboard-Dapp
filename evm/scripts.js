@@ -1,9 +1,11 @@
 let gasPriceData = [];
-const sortBySelection = document.getElementById('sort-by-selection');
-let sortBySelectionGasPrice = 'descending';
-let sortBySelectionChainName = 'descending';
+const sortByCategory = document.getElementById('sort-by-category');
+const sortByFrom = document.getElementById('sort-by-from');
+const chainsContainer = document.getElementById('chains-container');
+const refreshButton = document.getElementById('refresh-button');
+const statusMessage = document.getElementById('status-message');
 
-async function main() {
+async function generateGasPriceData() {
     try {
         for (const chainName in rpcUrls) {
             const theGasPrice = await getGasPrice(rpcUrls[chainName]);
@@ -12,12 +14,21 @@ async function main() {
             const theGasPriceNative = theGasPriceWei / 1e18;
             gasPriceData.push({chainName : chainName, gasPriceWei : theGasPriceWei, gasPriceGwei: theGasPriceGwei, gasPriceNative: theGasPriceNative});
         }
-        console.log('Gas Price Data:', gasPriceData);
-        sortBySelection.style.display = 'block';
+        sortByCategory.style.display = 'block';
     } catch (error) {
-        console.error('Error initializing gas data fetch:', error);
+        statusMessage.innerHTML = 'Error sorting gas price data: '+ error;
     }  
 }
+
+refreshButton.addEventListener('click', async () => {
+    gasPriceData = [];
+    await generateGasPriceData();
+    try {
+        printGasPriceData(gasPriceData);   
+    } catch (error) {
+        statusMessage.innerHTML = 'Error printing gas price data: '+ error;
+    }
+});
 
 async function getGasPrice(providerEndpoint) {
     const response = await fetch(providerEndpoint, {
@@ -35,37 +46,55 @@ async function getGasPrice(providerEndpoint) {
     return data.result;
 }
 
-async function sort(params) {
-    if (params === 'ascending') {
-        gasPriceData.sort((a, b) => a.gasPriceGwei - b.gasPriceGwei);
-        console.log('Sorted Gas Price Data (Ascending):', gasPriceData);
-    } else if (params === 'descending') {
-        gasPriceData.sort((a, b) => b.gasPriceGwei - a.gasPriceGwei);
-        console.log('Sorted Gas Price Data (Descending):', gasPriceData);
-    } else {
-        console.error('Invalid sort parameter:', params);
-        return;
+let categoryValue = 'gasPrice';
+let fromValue = 'ascending';
+
+sortByCategory.addEventListener('change', (event) => {
+    categoryValue = event.target.value;
+    sort(categoryValue, fromValue);
+});
+
+sortByFrom.addEventListener('change', (event) => {
+    fromValue = event.target.value;
+    sort(categoryValue, fromValue);
+});
+
+async function sort(category, from) {
+    try {
+        if (category === 'gasPrice') {
+            gasPriceData.sort((a, b) => {
+                return from === 'ascending' ? a.gasPriceWei - b.gasPriceWei : b.gasPriceWei - a.gasPriceWei;
+            });
+        } else if (category === 'chainName') {
+            gasPriceData.sort((a, b) => {
+                return from === 'ascending' ? a.chainName.localeCompare(b.chainName) : b.chainName.localeCompare(a.chainName);
+            });
+        }
+        printGasPriceData(gasPriceData);
+    } catch (error) {
+        statusMessage.innerHTML = 'Error sorting gas price data: '+ error;
     }
 }
 
-sortBySelection.addEventListener('change', (event) => {
-    if (event.target.value === 'gasPrice') {
-        if (sortBySelectionGasPrice === 'descending') {
-            sort('ascending');
-            sortBySelectionGasPrice = 'ascending';
-        } else {
-            sort('descending');
-            sortBySelectionGasPrice = 'descending';
-        }
-    }
-    if (event.target.value === 'chainName') {
-        if (sortBySelectionChainName === 'descending') {
-            gasPriceData.sort((a, b) => a.chainName.localeCompare(b.chainName));
-            sortBySelectionChainName = 'ascending';
-        } else {
-            gasPriceData.sort((a, b) => b.chainName.localeCompare(a.chainName));
-            sortBySelectionChainName = 'descending';
-        }
-    }
-    console.log('Sorted Gas Price Data:', gasPriceData);
-});
+function printGasPriceData(gasPriceData) {
+    chainsContainer.innerHTML = ''; // Clear previous data
+    const chainsHeader = document.createElement('tr');
+    chainsHeader.className = 'chains-header';    
+    chainsHeader.innerHTML = `
+        <th>Chain Name</th>
+        <th>Gas Price (Wei)</th>
+        <th>Gas Price (Gwei)</th>
+        <th>Gas Price (Native)</th>
+    `; // Add table headers
+    chainsContainer.appendChild(chainsHeader); // Append header to the container
+    gasPriceData.forEach(chain => {
+        const gasPriceRow = document.createElement('tr');
+        gasPriceRow.innerHTML = `
+            <td>${chain.chainName}</td>
+            <td>${chain.gasPriceWei} wei</td>
+            <td>${chain.gasPriceGwei} Gwei</td>
+            <td>${chain.gasPriceNative} Native</td>
+        `;
+        chainsContainer.appendChild(gasPriceRow);
+    });
+}

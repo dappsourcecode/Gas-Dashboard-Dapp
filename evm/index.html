@@ -8,11 +8,18 @@
     <script src="chains.js"></script>
 </head>
 <body>
-    <select id="sort-by-selection">
-        <option value="default">Sort By</option>
+    <button id="refresh-button">Refresh</button>
+    <select id="sort-by-category">
         <option value="gasPrice">Gas Price</option>
         <option value="chainName">Chain Name</option>
     </select>
+    <select id="sort-by-from">
+        <option value="default">Sort By From</option>
+        <option value="ascending">Ascending</option>
+        <option value="descending">Descending</option>
+    </select>
+    <div id="chains-container"></div>
+    <div id="status-message"></div>
     <script src="scripts.js"></script>
 </body>
 </html>
