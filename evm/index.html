@@ -6,9 +6,15 @@
     <title>Multi-Chain Gas Dashboard</title>
     <link rel="stylesheet" href="styles.css">
     <script src="chains.js"></script>
+    <script src="jsonRPCs.js"></script>
 </head>
 <body>
     <button id="refresh-button">Refresh</button>
+    <select id="units">
+        <option value="wei">Wei</option>
+        <option value="gwei">Gwei</option>
+        <option value="ether">Ether</option>
+    </select>
     <select id="sort-by-category">
         <option value="gasPrice">Gas Price</option>
         <option value="chainName">Chain Name</option>
@@ -20,6 +26,7 @@
     </select>
     <div id="chains-container"></div>
     <div id="status-message"></div>
+    <script src="domVariables.js"></script>
     <script src="scripts.js"></script>
 </body>
 </html>
