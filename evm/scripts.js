@@ -1,4 +1,7 @@
 let gasPriceData = [];
+let theGasPriceWei = 0;
+let themaxPriorityFeePerGasWei = 0;
+let theBaseFeeWei = 0;
 
 async function generateGasPriceData() {
     try {
@@ -177,14 +180,6 @@ function printGasPriceDataAll(gasPriceData, selectedUnit) {
         `;
         chainsContainer.appendChild(gasPriceRow);
     });
-}
-
-async function getRPCURLsFromJson() {
-    const response = await fetch(
-        "https://0fajarpurnama0.github.io/assets/json/evmrpc.json"
-    );
-    const RPCURLs = await response.json();
-    return RPCURLs;
 }
 
 tryRPCURL.addEventListener("change", async (event) => {
