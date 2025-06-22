@@ -1,4 +1,4 @@
-const rpcUrls = {
+let rpcUrls = {
     'Ethereum Mainnet': 'https://ethereum-mainnet.wallet.brave.com/', // e.g., Infura, Alchemy
     'Polygon Mainnet': 'https://polygon-mainnet.wallet.brave.com/',
     'Arbitrum One': 'https://arb1.arbitrum.io/rpc',

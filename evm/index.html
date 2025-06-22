@@ -9,7 +9,9 @@
     <script src="jsonRPCs.js"></script>
 </head>
 <body>
-    <button id="refresh-button">Refresh</button>
+    <button id="refresh-button">Get Gas Price</button>
+    <button id="RPCURLsJSONTemplate">RPC URLs JSON Template</button>
+    <label id="jsonFileInput">Insert your own RPC URLs: <input type="file" id="fileInput"></label>
     <select id="units">
         <option value="wei">Wei</option>
         <option value="gwei">Gwei</option>
@@ -24,7 +26,21 @@
         <option value="ascending">Ascending</option>
         <option value="descending">Descending</option>
     </select>
-    <div id="chains-container"></div>
+    <div id="chains-container">
+        <table id="chains-table">
+            <thead>
+                <tr>
+                    <th>Chain Name</th>
+                    <th>Gas Price</th>
+                    <th>Max Priority Fee Per Gas</th>
+                    <th>Base Fee</th>
+                </tr>
+            </thead>
+            <tbody id="chains-tbody">
+                <!-- Chain data will be populated here -->
+            </tbody>
+        </table>
+    </div>
     <div id="loader"></div>
     <div id="status-message"></div>
     Try RPC URL: <input id="tryRPCURL" type="text" placeholder="https://eth.llamarpc.com"></input>

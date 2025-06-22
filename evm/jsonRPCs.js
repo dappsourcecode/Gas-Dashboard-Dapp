@@ -43,5 +43,5 @@ async function getBaseFee(providerEndpoint) {
         })
     });
     const data = await response.json();
-    return data.result;
+    return data.result ? data.result.baseFeePerGas : '0x0';
 }

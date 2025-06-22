@@ -57,7 +57,7 @@ async function generateGasPriceData() {
                 gasPriceWei: theGasPriceWei,
                 maxPriorityFeePerGasWei: themaxPriorityFeePerGasWei,
                 baseFeeWei: theBaseFeeWei
-            }, "chains-container");
+            }, "chains-tbody");
         }
         console.log('Gas price data generated:', gasPriceData);
     } catch (error) {
@@ -67,9 +67,12 @@ async function generateGasPriceData() {
 
 refreshButton.addEventListener("click", async () => {
     loader.style.display = "inline-block";
+    chainsTBody.innerHTML = ""; // Clear previous data
+    statusMessage.innerHTML = ""; // Clear previous status messages
     gasPriceData = [];
     await generateGasPriceData();
     loader.style.display = "none";
+    refreshButton.innerHTML = "Refresh";
 });
 
 let categoryValue = "gasPrice";
@@ -189,4 +192,33 @@ tryRPCURL.addEventListener("change", async (event) => {
     const MaxPriorityFeePerGas = await getMaxPriorityFeePerGas(event.target.value);
     const BaseFee = await getBaseFee(event.target.value);
     trial.innerHTML = `Gas Price Wei: ${parseInt(GasPrice, 16)} <br> Max Priority Fee Per Gas Wei: ${parseInt(MaxPriorityFeePerGas, 16)} <br> Base Fee Wei: ${parseInt(BaseFee, 16)}`;
+});
+
+RPCURLsJSONTemplate.addEventListener("click", async () => {
+    const JSONRPCURLs = JSON.stringify(rpcUrls);
+    const blob = new Blob([JSONRPCURLs], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "evmrpc.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+});
+
+fileInput.addEventListener("change", async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            const contents = e.target.result;
+            try {
+                const json = JSON.parse(contents);
+                rpcUrls = json;
+            } catch (error) {
+                console.error("Error parsing JSON:", error);
+            }
+        };
+        reader.readAsText(file);
+    }
 });
